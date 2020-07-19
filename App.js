@@ -46,7 +46,7 @@ class App extends Component
           <Tab.Navigator>
             <Tab.Screen
               name="gtaGameList"
-              component={GtaGameList}
+              component={GtaGameListStackNavigator}
               options={{
                 title: "GTA Games",
               //  tabBarIcon: ({ color, size }) => (
@@ -56,10 +56,10 @@ class App extends Component
             />
             <Tab.Screen
               name="ffGameList"
-              component={FFGameList}
+              component={FFGameListStackNavigator}
               options={{
                 title: "Final Fantasy Games",
-              //  tabBarIcon: ({color, size }) => <Icon name='ios-heart' color={color} size={size}/>
+                // tabBarIcon: ({color, size }) => <Icon name='ios-heart' color={color} size={size}/>
               }}
             />
             </Tab.Navigator>
