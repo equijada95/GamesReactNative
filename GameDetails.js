@@ -19,11 +19,17 @@ export default class GameDetails extends Component
 
     this.apiClient = new TvdbApiClient();
     let params = this.props.route.params;
+
+    this.posterAlpha = new Animated.Value(0);
+    this.posterScale = new Animated.Value(0.5);
+    this.scrollValue = new Animated.Value(0);
+
     let game = params.game;
     this.state = {
       game: params.game
       
     };
+
     this.props.navigation.setOptions({
         title: game.name
     });
@@ -31,25 +37,68 @@ export default class GameDetails extends Component
   
   componentDidMount() {
 
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(this.posterAlpha, {
+          duration: 1000,
+          toValue: 1,
+          useNativeDriver: true,
+        }),
+        Animated.spring(this.posterScale, {
+          speed: 1,
+          bounciness: 10,
+          toValue: 1,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.timing(this.posterScale, {
+        toValue: -1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(this.posterScale, {
+        toValue: 1,
+        delay: 1000,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      this.setState({
+        ...this.state,
+        initialAnimation: false,
+      })
+    });
     
   }
 
   render() {
 
-    
-
     game = this.state.game;
 
     return (
-      <ScrollView 
+      <Animated.ScrollView 
         contentContainerStyle={styles.container}
-        
+        onScroll={Animated.event(
+          [{ 
+            nativeEvent: {
+               contentOffset: {
+                 // This will store the contentOffset.y of our scroll view
+                 // to the Animated.Value inside of this.scrollValue
+                 //
+                 y: this.scrollValue,
+               },
+             }
+           }],
+           {
+             useNativeDriver: true,
+           }
+        )}
         scrollEventThrottle={16}
       >
         {this.renderHeader(game)}
         {this.renderOverview(game)}
         {this.renderPlatforms(game)}
-      </ScrollView>
+      </Animated.ScrollView>
     );
   }
 
@@ -57,9 +106,16 @@ export default class GameDetails extends Component
   {
     return (
     <View style={styles.headerContainer}>
-      <Image 
+      <Animated.Image 
         style={[styles.image, {
-          
+          opacity: this.state.initialAnimation ? this.posterAlpha : this.scrollValue.interpolate({
+            inputRange: [0, 150],
+            outputRange: [1.0, 0.0],
+            extrapolate: 'clamp',
+          }),
+          transform: [{
+            scale: this.posterScale,
+          }],
         }]}
         resizeMode="contain"
         source={game.background_image!=null?{
