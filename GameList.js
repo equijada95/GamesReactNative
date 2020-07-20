@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {
   FlatList,
+  SectionList,
   Image,
   StyleSheet,
+  ActivityIndicator,
   ScrollView,
   View,
   TouchableHighlight,
@@ -23,6 +25,9 @@ class GameList extends Component
       loading: false,
       games: []
     };
+    this.nextPage = 1;
+    this.numberOfPages = 2;
+    this.loading = false;
   }
 
   componentDidMount()
@@ -58,22 +63,73 @@ class GameList extends Component
     });
   }
 
+  loadNextPage() {
+    if (this.nextPage > this.numberOfPages)
+    {
+      return;
+    }
+
+	if (this.loading)
+    {
+      return;
+    }
+
+    this.loading = true;
+
+    this.loadPage(this.nextPage)
+    .then(({ resultGames, numberOfPages }) => {
+      let games = resultGames.map((game) => {
+        return { key: game.id.toString(), game: game }
+      })
+      this.setState({ games: this.state.games.concat(games) });
+      this.nextPage++;
+      this.numberOfPages = numberOfPages;
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .finally(() => {
+      this.loading = false;
+    });
+  }
+
+  
   async loadPage(page)
   {
     return [];
   }
 
+  onPullToRefresh()
+  {
+      this.nextPage = 1;
+      this.loadNextPage();
+  }
+
   render(){
     return (
       <View style={{flex: 1}}>
-          <FlatList
-            data={this.state.games}
-            renderItem={this.renderGameItem.bind(this)}
-        //    onEndReached={(this.state.games.length == 0 || this.state.loading
-        //       ? null: this.handleEndOfScroll.bind(this))}
+          <SectionList
+          onRefresh={null}
+          refreshing={this.state.loading ? null : this.onPullToRefresh.bind(this)}
+          sections={[{key: 'section1', data: this.state.games}]}
+          renderSectionFooter={this.state.loading ? this.renderFooter.bind(this) : null}
+          renderItem={this.renderGameItem.bind(this)}
+        //    onRefresh={
+        //        this.onPullToRefresh.bind(this)
+        //    }
+            data={this.state.games}            
+            onEndReached={this.loadNextPage}
+            
             />
       </View>
     );
+  }
+
+  renderFooter()
+  {
+    return(
+    <ActivityIndicator/>
+      );
   }
 
   renderGameItem({item})
