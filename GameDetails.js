@@ -14,11 +14,10 @@ import TvdbApiClient from './TvDBApiClient';
 
 export default class GameDetails extends Component
 {
+  constructor(props) {
     super(props);
 
     this.apiClient = new TvdbApiClient();
-    this.currentPage = 1;
-    this.state = {
     let params = this.props.route.params;
     let game = params.game;
     this.state = {
