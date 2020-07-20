@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 import TvdbApiClient from './TvDBApiClient';
+import Video from 'react-native-video';
 
 export default class GameDetails extends Component
 {
@@ -72,6 +73,24 @@ export default class GameDetails extends Component
   }
 
   render() {
+
+    if (this.state.watchingTrailer)
+    {
+      return (
+        <Video
+          // IMPORTANT: In order to play the video, run the next command in the project folder:
+          // ruby -run -e httpd . -p 9002
+          //
+          source={game.clip.clip!=null?{
+            uri: game.clip.clip
+           }: <Text>There is no trailer available for this game</Text>}
+          style={{flex:1}}
+          onEnd={this.onWatchTrailerEnded.bind(this)}
+        />
+      );
+    }
+
+
 
     game = this.state.game;
 
