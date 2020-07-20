@@ -59,7 +59,7 @@ class App extends Component
               component={FFGameListStackNavigator}
               options={{
                 title: "Final Fantasy Games",
-                // tabBarIcon: ({color, size }) => <Icon name='ios-heart' color={color} size={size}/>
+                 // tabBarIcon: ({color, size }) => <Icon name='ios-heart' color={color} size={size}/>
               }}
             />
             </Tab.Navigator>
