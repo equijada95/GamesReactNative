@@ -74,25 +74,25 @@ export default class GameDetails extends Component
 
   render() {
 
+    game = this.state.game;
     if (this.state.watchingTrailer)
     {
-      return (
-        <Video
-          // IMPORTANT: In order to play the video, run the next command in the project folder:
-          // ruby -run -e httpd . -p 9002
-          //
-          source={game.clip.clip!=null?{
+      if(game.clip == null){
+      
+        alert("There is no trailer available for this game")
+      
+    } else{
+    return(
+      <Video
+          source={{
             uri: game.clip.clip
-           }: <Text>There is no trailer available for this game</Text>}
+           }}
           style={{flex:1}}
           onEnd={this.onWatchTrailerEnded.bind(this)}
         />
-      );
+    ) 
     }
-
-
-
-    game = this.state.game;
+    }
 
     return (
       <Animated.ScrollView 
@@ -166,11 +166,6 @@ export default class GameDetails extends Component
       ...this.state,
       watchingTrailer: false,
     });
-  }
-
-  onAddReminderPress()
-  {
-    
   }
 
   renderOverview(game)
