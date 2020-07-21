@@ -76,21 +76,21 @@ class GameList extends Component
 
     this.loading = true;
 
-    this.loadPage(this.nextPage)
-    .then(({ resultGames, numberOfPages }) => {
-      let games = resultGames.map((game) => {
-        return { key: game.id.toString(), game: game }
-      })
-      this.setState({ games: this.state.games.concat(games) });
-      this.nextPage++;
-      this.numberOfPages = numberOfPages;
-    })
-    .catch((error) => {
-      console.error(error);
-    })
-    .finally(() => {
-      this.loading = false;
-    });
+  //  this.loadPage(this.nextPage)
+  //  .then(({ resultGames, numberOfPages }) => {
+  //    let games = resultGames.map((game) => {
+  //      return { key: game.id.toString(), game: game }
+  //    })
+  //    this.setState({ games: this.state.games.concat(games) });
+  //    this.nextPage++;
+  //    this.numberOfPages = numberOfPages;
+  //  })
+  //  .catch((error) => {
+  //    console.error(error);
+  //  })
+  //  .finally(() => {
+  //    this.loading = false;
+  //  });
   }
 
   
