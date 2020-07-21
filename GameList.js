@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import TvdbApiClient from './TvDBApiClient';
 
-class GameList extends Component
+export default class GameList extends Component
 {
 
   constructor(props)
@@ -22,17 +22,16 @@ class GameList extends Component
     this.apiClient = new TvdbApiClient();
     this.currentPage = 1;
     this.state = {
-      loading: false,
       games: []
     };
     this.nextPage = 1;
-    this.numberOfPages = 2;
+    this.numberOfPages = 1;
     this.loading = false;
   }
 
   componentDidMount()
   {
-      this.loadgames();
+      this.loadNextPage();
   }
 
   async loadgames()
@@ -76,79 +75,69 @@ class GameList extends Component
 
     this.loading = true;
 
-  //  this.loadPage(this.nextPage)
-  //  .then(({ resultGames, numberOfPages }) => {
-  //    let games = resultGames.map((game) => {
-  //      return { key: game.id.toString(), game: game }
-  //    })
-  //    this.setState({ games: this.state.games.concat(games) });
-  //    this.nextPage++;
-  //    this.numberOfPages = numberOfPages;
-  //  })
-  //  .catch((error) => {
-  //    console.error(error);
-  //  })
-  //  .finally(() => {
-  //    this.loading = false;
-  //  });
+    this.loadPage(this.nextPage)
+    .then(({ resultGames, numberOfPages }) => {
+      let games = resultGames.map((game) => {
+        return { key: game.id.toString(), game: game }
+      })
+      this.setState({ games: this.state.games.concat(games) });
+      this.nextPage++;
+      this.numberOfPages = numberOfPages;
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .finally(() => {
+      this.loading = false;
+    });
+  }
+
+  loadPage(page)
+  {
+    throw new Error('You have to implement the method loadPage!');
   }
 
   
-  async loadPage(page)
-  {
-    return [];
-  }
 
-  onPullToRefresh()
-  {
-      this.nextPage = 1;
-      this.loadNextPage();
-  }
+  
+//  async loadPage(page)
+//  {
+//    return [];
+//  }
 
   render(){
     return (
       <View style={{flex: 1}}>
-          <SectionList
-          onRefresh={null}
-          refreshing={this.state.loading ? null : this.onPullToRefresh.bind(this)}
-          sections={[{key: 'section1', data: this.state.games}]}
-          renderSectionFooter={this.state.loading ? this.renderFooter.bind(this) : null}
+          <FlatList
+          data={this.state.games}    
           renderItem={this.renderGameItem.bind(this)}
-        //    onRefresh={
-        //        this.onPullToRefresh.bind(this)
-        //    }
-            data={this.state.games}            
-            onEndReached={this.loadNextPage}
+          onEndReached = {() =>
+          {
+            this.loadNextPage();
+          }}
             
             />
       </View>
     );
   }
 
-  renderFooter()
-  {
-    return(
-    <ActivityIndicator/>
-      );
-  }
-
   renderGameItem({item})
   {
     return(
     <TouchableHighlight 
-        onPress={this.onGamePressed.bind(this, item)}
+        onPress={this.onGamePressed.bind(this, item.game)}
         underlayColor='lightgray'
     >
       <View style={{flexDirection: 'row', padding: 10}}>
        <Image
        style={{width: 50, height: 75}} 
-       source={item.background_image!=null?{
-         uri: item.background_image
+       source={item.game.background_image!=null?{
+         uri: item.game.background_image
         }: null}
        />
         <View style={{justifyContent: 'center', marginLeft: 10}}>
-          <Text style={{fontWeight: 'bold'}}>{item.name}</Text>
-          <Text>{item.released}</Text>
+          <Text style={{fontWeight: 'bold'}}>{item.game.name}</Text>
+          <Text>{item.game.released}</Text>
         </View>
       </View>
     </TouchableHighlight>
@@ -160,18 +149,4 @@ class GameList extends Component
       this.props.navigation.navigate("gameDetails", {game: game});
   }
 
-  handleEndOfScroll()
-  {
-  //  if(this.state.games.loading || this.state.games.length == 0)
-  //  {
-  //    return;
-  //  }
-  //  this.currentPage++;
-  //  this.loadgames();
-  }
-
 }
-
-
-
-export default GameList;

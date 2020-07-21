@@ -11,6 +11,7 @@ export default class TvdbApiClient
       console.log(responseJSON);
       return ({
           resultGames: responseJSON.results,
+          numberOfPages: Math.ceil(responseJSON.count/20),
       });
   }
 
@@ -23,6 +24,7 @@ export default class TvdbApiClient
       console.log(responseJSON);
       return ({
           resultGames: responseJSON.results,
+          numberOfPages: Math.ceil(responseJSON.count/20),
       });
   }
 
