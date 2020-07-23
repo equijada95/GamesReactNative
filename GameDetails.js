@@ -143,9 +143,9 @@ export default class GameDetails extends Component
         <Text>{game.name}</Text>
         <Text>{game.released}</Text>
         <TouchableHighlight onPress={this.onWatchTrailerPress.bind(this)}>
-        <View style={styles.button}>
-          <Text>Watch trailer ▶️</Text>
-        </View>
+          <View style={styles.button}>
+            <Text>Watch trailer ▶️</Text>
+          </View>
         </TouchableHighlight>
       </View>
     </View>

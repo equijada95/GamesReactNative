@@ -97,14 +97,6 @@ export default class GameList extends Component
     throw new Error('You have to implement the method loadPage!');
   }
 
-  
-
-  
-//  async loadPage(page)
-//  {
-//    return [];
-//  }
-
   render(){
     return (
       <View style={{flex: 1}}>
@@ -129,13 +121,13 @@ export default class GameList extends Component
         underlayColor='lightgray'
     >
       <View style={{flexDirection: 'row', padding: 10}}>
-       <Image
-       style={{width: 50, height: 75}} 
-       source={item.game.background_image!=null?{
+        <Image
+        style={{width: 130, height: 75}} 
+        source={item.game.background_image!=null?{
          uri: item.game.background_image
         }: null}
-       />
-        <View style={{justifyContent: 'center', marginLeft: 10}}>
+        />
+        <View style={{top: 0, left: 20, right: 0, bottom: 0, justifyContent: 'center'}}>
           <Text style={{fontWeight: 'bold'}}>{item.game.name}</Text>
           <Text>{item.game.released}</Text>
         </View>
@@ -150,3 +142,4 @@ export default class GameList extends Component
   }
 
 }
+
