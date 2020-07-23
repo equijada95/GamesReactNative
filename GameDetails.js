@@ -12,9 +12,26 @@ import {
 } from 'react-native';
 import TvdbApiClient from './TvDBApiClient';
 import Video from 'react-native-video';
+import Realm from 'realm';
+let realm;
+
+const GameSchema = {
+  name: 'Game',
+  properties: {
+    game_id: 'int',
+    game_name: 'string',
+    game_released: 'string',
+    game_image: 'string?',
+    game_clip: 'string?',
+ //   game_genres: 'data'
+  }
+};
 
 export default class GameDetails extends Component
 {
+  
+
+
   constructor(props) {
     super(props);
 
@@ -34,6 +51,8 @@ export default class GameDetails extends Component
     this.props.navigation.setOptions({
         title: game.name
     });
+
+    realm = new Realm({ path: 'GameDatabase.realm' });
   }
   
   componentDidMount() {
@@ -147,6 +166,9 @@ export default class GameDetails extends Component
         <TouchableHighlight onPress={this.onWatchTrailerPress.bind(this)}>
           <Text>Watch trailer ▶️</Text>
         </TouchableHighlight>
+        <TouchableHighlight onPress={this.saveFavorite.bind(this)}>
+          <Text>Add favorite</Text>
+        </TouchableHighlight>
       </View>
     </View>
     );
@@ -200,7 +222,40 @@ export default class GameDetails extends Component
       </View>
     );
   }
+
+
+saveFavorite()
+{
+  Realm.open({schema: [GameSchema]})
+  .then(realm => {
+  realm.write(() => {
+    var clip;
+    var ID =
+      realm.objects('Game').sorted('game_id', true).length > 0
+        ? realm.objects('Game').sorted('game_id', true)[0]
+            .game_id + 1
+        : 1;
+    if(game.clip == null)
+    {
+        clip = null
+    } else{
+      clip = game.clip.clip
+    }
+    realm.create('Game', {
+      game_id: ID,
+      game_name: game.name,
+      game_released: game.released,
+      game_image: game.background_image,
+      game_clip: clip,
+  //    game_genres: game.genres
+    });
+    alert("The game was correctly added to favorites")
+  });
+  })
+  }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

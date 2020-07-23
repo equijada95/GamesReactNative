@@ -11,6 +11,7 @@ import GameList from './GameList';
 import GameDetails from './GameDetails';
 import GtaGameList from './GtaGameList';
 import FFGameList from './FFGameList';
+import FavGameList from './FavGameList';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage'
@@ -65,6 +66,16 @@ createMainNavigation(initialTab)
     );
   };
 
+  this.favGameListStackNavigator = () => {
+
+    return (
+    <Stack.Navigator>
+      <Stack.Screen name="favGames" component={FavGameList}/>
+      <Stack.Screen name="gameDetails" component={GameDetails}/>
+    </Stack.Navigator>
+    );
+  };
+
   this.mainTab = () => {
     // This function returns an event handler that will store a given tab as "last selected tab"
     function tabBarOnPress(tabName) {
@@ -93,6 +104,15 @@ createMainNavigation(initialTab)
           listeners={{tabPress: tabBarOnPress("ffGameList")}}
           options={{
             title: "Final Fantasy Games",
+             // tabBarIcon: ({color, size }) => <Icon name='ios-heart' color={color} size={size}/>
+          }}
+        />
+        <Tab.Screen
+          name="favGameList"
+          component={this.favGameListStackNavigator}
+          listeners={{tabPress: tabBarOnPress("favGameList")}}
+          options={{
+            title: "Favorites Games",
              // tabBarIcon: ({color, size }) => <Icon name='ios-heart' color={color} size={size}/>
           }}
         />
