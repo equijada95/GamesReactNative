@@ -12,7 +12,7 @@ import GameDetails from './GameDetails';
 import GtaGameList from './GtaGameList';
 import FFGameList from './FFGameList';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { Icon } from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-community/async-storage'
 
 const Stack = createStackNavigator();
@@ -66,7 +66,6 @@ createMainNavigation(initialTab)
   };
 
   this.mainTab = () => {
-    // This function returns an event handler that will store a given tab as "last selected tab"
     function tabBarOnPress(tabName) {
       return (event) => {
         AsyncStorage.setItem('lastSelectedTab', tabName);
@@ -82,9 +81,9 @@ createMainNavigation(initialTab)
           listeners={{tabPress: tabBarOnPress("gtaGameList")}}
           options={{
             title: "GTA Games",
-          //  tabBarIcon: ({ color, size }) => (
-          //    <Icon name='ios-heart' size={size} color={color} />
-          //    ),
+            tabBarIcon: ({ color, size }) => (
+              <Icon name='ios-car' size={size} color={color} />
+              ),
           }}
         />
         <Tab.Screen
@@ -93,7 +92,7 @@ createMainNavigation(initialTab)
           listeners={{tabPress: tabBarOnPress("ffGameList")}}
           options={{
             title: "Final Fantasy Games",
-             // tabBarIcon: ({color, size }) => <Icon name='ios-heart' color={color} size={size}/>
+            tabBarIcon: ({color, size }) => <Icon name='md-bonfire' color={color} size={size}/>
           }}
         />
         </Tab.Navigator>

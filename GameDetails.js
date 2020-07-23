@@ -54,8 +54,8 @@ export default class GameDetails extends Component
         }),
       ]),
       Animated.timing(this.posterScale, {
-        toValue: -1,
-        duration: 1000,
+        toValue: 1.5,
+        duration: 500,
         useNativeDriver: true,
       }),
       Animated.timing(this.posterScale, {
@@ -70,9 +70,6 @@ export default class GameDetails extends Component
         initialAnimation: false,
       })
     });
-  
-    
-    
   }
 
 
