@@ -8,13 +8,14 @@ import {
   ScrollView,
   Text,
   TouchableHighlight,
-  View
+  View,
 } from 'react-native';
 import TvdbApiClient from './TvDBApiClient';
 import Video from 'react-native-video';
 
 export default class GameDetails extends Component
 {
+
   constructor(props) {
     super(props);
 
@@ -69,8 +70,11 @@ export default class GameDetails extends Component
         initialAnimation: false,
       })
     });
+  
+    
     
   }
+
 
   render() {
 
@@ -94,6 +98,7 @@ export default class GameDetails extends Component
     }
     }
 
+
     return (
       <Animated.ScrollView 
         contentContainerStyle={styles.container}
@@ -116,7 +121,7 @@ export default class GameDetails extends Component
       >
         {this.renderHeader(game)}
         {this.renderOverview(game)}
-        {this.renderPlatforms(game)}
+        {this.renderGenres(game)}
       </Animated.ScrollView>
     );
   }
@@ -177,9 +182,9 @@ export default class GameDetails extends Component
     );
   }
 
-  renderPlatforms(game)
+  renderGenres(game)
   {
-    if (game.platforms == null)
+    if (game.genres == null)
     {
       return [];
     }
@@ -191,7 +196,7 @@ export default class GameDetails extends Component
         </Text>
         {game.genres.map((genre) => {
           return (
-            <Text style={styles.platforms} key={genre.id}>
+            <Text style={styles.genres} key={genre.id}>
               {genre.name}
             </Text>
           )
@@ -225,7 +230,7 @@ const styles = StyleSheet.create({
   dataTitle: {
     fontWeight: 'bold',
   },
-  platforms: {
+  genres: {
     paddingHorizontal: 2,
     marginHorizontal: 2,
     marginVertical: 1,
