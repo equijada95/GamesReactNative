@@ -140,7 +140,7 @@ export default class GameDetails extends Component
          }: null} 
       />
       <View style={styles.titleContainer}>
-        <Text>{game.name}</Text>
+        <Text style={{fontWeight: 'bold'}}>{game.name}</Text>
         <Text>{game.released}</Text>
         <TouchableHighlight onPress={this.onWatchTrailerPress.bind(this)}>
           <View style={styles.button}>
@@ -148,7 +148,9 @@ export default class GameDetails extends Component
           </View>
         </TouchableHighlight>
       </View>
+      <Text>Rating: {game.rating}/5</Text>
     </View>
+    
     );
   }
 
@@ -236,8 +238,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: 100,
-    height: 150,
+    width: 180,
+    height: 260,
   }
 
 });
