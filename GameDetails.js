@@ -103,9 +103,6 @@ export default class GameDetails extends Component
           [{ 
             nativeEvent: {
                contentOffset: {
-                 // This will store the contentOffset.y of our scroll view
-                 // to the Animated.Value inside of this.scrollValue
-                 //
                  y: this.scrollValue,
                },
              }
@@ -117,7 +114,6 @@ export default class GameDetails extends Component
         scrollEventThrottle={16}
       >
         {this.renderHeader(game)}
-        {this.renderOverview(game)}
         {this.renderGenres(game)}
       </Animated.ScrollView>
     );
@@ -147,7 +143,9 @@ export default class GameDetails extends Component
         <Text>{game.name}</Text>
         <Text>{game.released}</Text>
         <TouchableHighlight onPress={this.onWatchTrailerPress.bind(this)}>
+        <View style={styles.button}>
           <Text>Watch trailer ▶️</Text>
+        </View>
         </TouchableHighlight>
       </View>
     </View>
@@ -170,14 +168,7 @@ export default class GameDetails extends Component
     });
   }
 
-  renderOverview(game)
-  {
-    return (
-      <Text style={styles.item}>
-        {game.overview}
-      </Text>
-    );
-  }
+  
 
   renderGenres(game)
   {
@@ -210,6 +201,12 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 5
   },
   headerContainer: {
     flex: 0,
