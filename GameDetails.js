@@ -114,6 +114,7 @@ export default class GameDetails extends Component
         scrollEventThrottle={16}
       >
         {this.renderHeader(game)}
+        {this.renderOverview(game)}
         {this.renderGenres(game)}
       </Animated.ScrollView>
     );
@@ -148,7 +149,6 @@ export default class GameDetails extends Component
           </View>
         </TouchableHighlight>
       </View>
-      <Text>Rating: {game.rating}/5</Text>
     </View>
     
     );
@@ -170,7 +170,14 @@ export default class GameDetails extends Component
     });
   }
 
-  
+renderOverview(movie)
+  {
+    return (
+      <Text style={styles.item}>
+        Rating: {game.rating}/5
+      </Text>
+    );
+  }
 
   renderGenres(game)
   {
