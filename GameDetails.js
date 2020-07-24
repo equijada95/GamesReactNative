@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import {
   Animated,
-  Platform,
   StyleSheet,
-  Image,
-  NativeModules,
-  ScrollView,
   Text,
   TouchableHighlight,
   View,
 } from 'react-native';
-import TvdbApiClient from './TvDBApiClient';
+import GamedbApiClient from './GameDBApiClient';
 import Video from 'react-native-video';
 
 export default class GameDetails extends Component
@@ -19,7 +15,7 @@ export default class GameDetails extends Component
   constructor(props) {
     super(props);
 
-    this.apiClient = new TvdbApiClient();
+    this.apiClient = new GamedbApiClient();
     let params = this.props.route.params;
 
     this.posterAlpha = new Animated.Value(0);
@@ -114,7 +110,7 @@ export default class GameDetails extends Component
         scrollEventThrottle={16}
       >
         {this.renderHeader(game)}
-        {this.renderOverview(game)}
+        {this.renderRating(game)}
         {this.renderGenres(game)}
         {this.renderTags(game)}
       </Animated.ScrollView>
@@ -171,7 +167,7 @@ export default class GameDetails extends Component
     });
   }
 
-renderOverview(movie)
+renderRating(game)
   {
     return (
       <Text style={styles.item}>
@@ -194,7 +190,7 @@ renderOverview(movie)
         </Text>
         {game.genres.map((genre) => {
           return (
-            <Text style={styles.genres} key={genre.id}>
+            <Text style={styles.lists} key={genre.id}>
               {genre.name}
             </Text>
           )
@@ -218,7 +214,7 @@ renderOverview(movie)
         </Text>
         {game.tags.map((tag) => {
           return (
-            <Text style={styles.genres} key={tag.id}>
+            <Text style={styles.lists} key={tag.id}>
               {tag.name}
             </Text>
           )
@@ -258,7 +254,7 @@ const styles = StyleSheet.create({
   dataTitle: {
     fontWeight: 'bold',
   },
-  genres: {
+  lists: {
     paddingHorizontal: 2,
     marginHorizontal: 2,
     marginVertical: 1,

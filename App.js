@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
 } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator} from '@react-navigation/stack';
-import TvdbApiClient from './TvDBApiClient';
-import GameList from './GameList';
 import GameDetails from './GameDetails';
 import GtaGameList from './GtaGameList';
 import FFGameList from './FFGameList';

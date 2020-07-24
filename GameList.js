@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import {
   FlatList,
-  SectionList,
   Image,
-  StyleSheet,
-  ActivityIndicator,
-  ScrollView,
   View,
   TouchableHighlight,
   Text,
 } from 'react-native';
-import TvdbApiClient from './TvDBApiClient';
+import GamedbApiClient from './GameDBApiClient';
 
 export default class GameList extends Component
 {
@@ -19,7 +15,7 @@ export default class GameList extends Component
   {
     super(props);
 
-    this.apiClient = new TvdbApiClient();
+    this.apiClient = new GamedbApiClient();
     this.currentPage = 1;
     this.state = {
       games: []
