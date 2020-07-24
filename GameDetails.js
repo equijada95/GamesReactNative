@@ -116,6 +116,7 @@ export default class GameDetails extends Component
         {this.renderHeader(game)}
         {this.renderOverview(game)}
         {this.renderGenres(game)}
+        {this.renderTags(game)}
       </Animated.ScrollView>
     );
   }
@@ -195,6 +196,30 @@ renderOverview(movie)
           return (
             <Text style={styles.genres} key={genre.id}>
               {genre.name}
+            </Text>
+          )
+        })
+        }
+      </View>
+    );
+  }
+
+  renderTags(game)
+  {
+    if (game.tags == null)
+    {
+      return [];
+    }
+
+    return (
+      <View style={[styles.item, styles.dataContainer]}>
+        <Text style={styles.dataTitle}>
+          Tags: 
+        </Text>
+        {game.tags.map((tag) => {
+          return (
+            <Text style={styles.genres} key={tag.id}>
+              {tag.name}
             </Text>
           )
         })
