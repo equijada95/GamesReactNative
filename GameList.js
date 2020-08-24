@@ -116,17 +116,20 @@ export default class GameList extends Component
         onPress={this.onGamePressed.bind(this, item.game)}
         underlayColor='lightgray'
     >
-      <View style={{flexDirection: 'row', padding: 10}}>
+      <View style={{flexDirection: 'column', padding: 10, justifyContent: 'center', alignItems: 'center'}}>
         <Image
-        style={{width: 130, height: 75}} 
+        style={{width: 260, height: 150}} 
         source={item.game.background_image!=null?{
          uri: item.game.background_image
         }: null}
         />
-        <View style={{top: 0, left: 20, right: 0, bottom: 0, justifyContent: 'center'}}>
+        <View style={{top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center'}}>
           <Text style={{fontWeight: 'bold'}}>{item.game.name}</Text>
-          <Text>{item.game.released}</Text>
-        </View>
+          </View>
+          <View style={{top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center'}}>
+          <Text style={{alignContent: 'center'}}>{item.game.released}</Text>
+        
+      </View>
       </View>
     </TouchableHighlight>
       );
