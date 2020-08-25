@@ -125,11 +125,10 @@ export default class GameList extends Component
         />
         <View style={{top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center'}}>
           <Text style={{fontWeight: 'bold'}}>{item.game.name}</Text>
-          </View>
-          <View style={{top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center'}}>
+        </View>
+        <View style={{top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center'}}>
           <Text style={{alignContent: 'center'}}>{item.game.released}</Text>
-        
-      </View>
+        </View>
       </View>
     </TouchableHighlight>
       );
