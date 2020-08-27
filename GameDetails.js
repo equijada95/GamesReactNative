@@ -247,6 +247,7 @@ renderRating(game)
 
 saveFavorite()
 {
+  let repeated = false;
   Realm.open({schema: [VideoGameSchema]})
   .then(realm => {
   realm.write(() => {
@@ -262,6 +263,16 @@ saveFavorite()
     } else{
       clip = game.clip.clip
     }
+    let list = Array.from(realm.objects('Game'));
+    for(let i=0; i<list.length; i++)
+    {
+      if(list[i].game_name==game.name)
+      {
+        repeated = true;
+      }
+    }
+
+    if(repeated == false){
     realm.create('Game', {
       game_id: ID,
       game_name: game.name,
@@ -270,8 +281,10 @@ saveFavorite()
       game_clip: clip,
       game_tags: game.tags.slice(0, game.tags.length).name
     });
-    console.log(realm.path);
     alert("The game was correctly added to favorites")
+  }else{
+    alert("This game has been previously added to favorites");
+  }
   });
   })
   }
