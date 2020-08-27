@@ -11,7 +11,7 @@ import Video from 'react-native-video';
 import Realm from 'realm';
 let realm;
 
-const VideoGameSchema = {
+export const VideoGameSchema = {
   name: 'Game',
   properties: {
     game_id: 'int',
@@ -270,6 +270,7 @@ saveFavorite()
       game_clip: clip,
       game_tags: game.tags.slice(0, game.tags.length).name
     });
+    console.log(realm.path);
     alert("The game was correctly added to favorites")
   });
   })
