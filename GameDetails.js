@@ -271,7 +271,7 @@ saveFavorite()
         repeated = true;
       }
     }
-
+    // la released en algunas da null controlar eso
     if(repeated == false){
     realm.create('Game', {
       game_id: ID,
