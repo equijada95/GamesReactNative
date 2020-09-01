@@ -8,6 +8,7 @@ import {
     ActivityIndicator,
     ScrollView,
     View,
+    Alert,
     TouchableHighlight,
     Text,
   } from 'react-native';
@@ -61,11 +62,26 @@ export default class FavGameList extends Component
           <Text style={{fontWeight: 'bold'}}>{item.game_name}</Text>
           <Text>{item.game_released}</Text>
           <TouchableHighlight onPress={ () => 
-            realm.write(() => {
-              realm.delete(
-                realm.objects('Game').filtered('game_id =' + item.game_id)
-            );
-          })
+            Alert.alert(
+              "Delete",
+              "Are you sure you want to delete it from your favorite list?",
+              [
+                {
+                  text: "Cancel",
+                  onPress: () => console.log("Cancel Pressed"),
+                  style: "cancel"
+                },
+                { text: "OK", onPress: () => 
+                realm.write(() => {
+                  realm.delete(
+                    realm.objects('Game').filtered('game_id =' + item.game_id)
+                  );
+                  alert(" This game has been correctly deleted from the list of favorites");
+                }),
+              }
+              ],
+              { cancelable: true}
+            )
           }  >
           <Text>Delete favorite</Text>
         </TouchableHighlight>
