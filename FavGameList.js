@@ -31,6 +31,7 @@ export default class FavGameList extends Component
         
           
           this.state = {
+            isFetching: false,
             game_details: realm.objects('Game')
           };
     }
@@ -76,6 +77,7 @@ export default class FavGameList extends Component
                   realm.delete(
                     realm.objects('Game').filtered('game_id =' + item.game_id)
                   );
+                  this.setState({ isFetching: true }, function() { this.render() });
                   alert(" This game has been correctly deleted from the list of favorites");
                 }),
               }
