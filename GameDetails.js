@@ -252,6 +252,7 @@ saveFavorite()
   .then(realm => {
   realm.write(() => {
     var clip;
+    var released;
     var ID =
       realm.objects('Game').sorted('game_id', true).length > 0
         ? realm.objects('Game').sorted('game_id', true)[0]
@@ -262,6 +263,12 @@ saveFavorite()
         clip = null
     } else{
       clip = game.clip.clip
+    }
+    if(game.released == null)
+    {
+        released = "No date"
+    } else{
+      released = game.released
     }
     let list = Array.from(realm.objects('Game'));
     for(let i=0; i<list.length; i++)
@@ -276,7 +283,7 @@ saveFavorite()
     realm.create('Game', {
       game_id: ID,
       game_name: game.name,
-      game_released: game.released,
+      game_released: released,
       game_image: game.background_image,
       game_clip: clip,
       game_tags: game.tags.slice(0, game.tags.length).name
