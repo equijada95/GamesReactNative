@@ -7,6 +7,7 @@ import {
     StyleSheet,
     ActivityIndicator,
     ScrollView,
+    RefreshControl,
     View,
     Alert,
     TouchableHighlight,
@@ -32,8 +33,17 @@ export default class FavGameList extends Component
           
           this.state = {
             isFetching: false,
-            game_details: realm.objects('Game')
+            game_details: realm.objects('Game'),
+            refreshing: false
           };
+    }
+
+    _onRefresh() {
+    //  this.render();
+      this.setState({refreshing: true});
+    //  fetchData().then(() => {
+        this.setState({refreshing: false});
+    //  });
     }
 
     render(){
@@ -42,7 +52,7 @@ export default class FavGameList extends Component
               <FlatList
               data={this.state.game_details}    
               renderItem={this.renderGameItem.bind(this)}
-                
+              refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh.bind(this)} />}
                 />
           </View>
         );
