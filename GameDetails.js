@@ -3,7 +3,7 @@ import {
   Animated,
   StyleSheet,
   Text,
-  TouchableHighlight,
+  Button,
   View,
 } from 'react-native';
 import GamedbApiClient from './GameDBApiClient';
@@ -155,16 +155,16 @@ export default class GameDetails extends Component
          }: null} 
       />
       <View style={styles.titleContainer}>
-        <Text style={{fontWeight: 'bold'}}>{game.name}</Text>
-        <Text>{game.released}</Text>
-        <TouchableHighlight onPress={this.onWatchTrailerPress.bind(this)}>
-          <View style={styles.button}>
-            <Text>Watch trailer ▶️</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={this.saveFavorite.bind(this)}>
-          <Text>Add favorite</Text>
-        </TouchableHighlight>
+        <Text style={styles.name}>{game.name}</Text>
+        <Text style={styles.date}>{game.released}</Text>
+        <Button onPress={this.saveFavorite.bind(this)}
+          title ="Add favorite 💖"
+        />
+        <View style={styles.space}>
+        </View>
+        <Button onPress={this.onWatchTrailerPress.bind(this)}
+          title ="Watch trailer ▶️"      
+        />
       </View>
     </View>
     
@@ -190,9 +190,14 @@ export default class GameDetails extends Component
 renderRating(game)
   {
     return (
-      <Text style={styles.item}>
-        Rating: {game.rating}/5
-      </Text>
+      <View style={{flexDirection: 'row'}}>
+        <Text style={styles.dataTitle}>
+          Rating: 
+        </Text>
+        <Text style={styles.item}>
+          {game.rating}/5
+        </Text>
+      </View>
     );
   }
 
@@ -278,7 +283,6 @@ saveFavorite()
         repeated = true;
       }
     }
-    // la released en algunas da null controlar eso
     if(repeated == false){
     realm.create('Game', {
       game_id: ID,
@@ -298,6 +302,16 @@ saveFavorite()
 }
 
 const styles = StyleSheet.create({
+  space:{
+    marginBottom: 10
+  },
+  name: {
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  date: {
+    fontSize: 17
+  },
   container: {
     flex: 0,
     padding: 10,
@@ -308,7 +322,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: "center",
     backgroundColor: "#DDDDDD",
-    padding: 5
+    padding: 5,
   },
   headerContainer: {
     flex: 0,
@@ -336,10 +350,11 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     justifyContent: 'center',
+    alignItems: 'center'
   },
   image: {
-    width: 180,
-    height: 260,
+    width: 190,
+    height: 270,
   }
 
 });

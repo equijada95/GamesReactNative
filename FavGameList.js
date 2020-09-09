@@ -2,15 +2,11 @@ import GameList from './GameList';
 import React, { Component } from 'react';
 import {
     FlatList,
-    SectionList,
     Image,
-    StyleSheet,
-    ActivityIndicator,
-    ScrollView,
     RefreshControl,
     View,
     Alert,
-    TouchableHighlight,
+    Button,
     Text,
   } from 'react-native';
 import Realm from 'realm';
@@ -64,15 +60,15 @@ export default class FavGameList extends Component
   
       <View style={{flexDirection: 'row', padding: 10}}>
        <Image
-       style={{width: 50, height: 75}} 
+       style={{width: 100, height: 150}} 
        source={item.game_image!=null?{
          uri: item.game_image
         }: null}
        />
         <View style={{justifyContent: 'center', marginLeft: 10}}>
-          <Text style={{fontWeight: 'bold'}}>{item.game_name}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 20}}>{item.game_name}</Text>
           <Text>{item.game_released}</Text>
-          <TouchableHighlight onPress={ () => 
+          <Button onPress={ () => 
             Alert.alert(
               "Delete",
               "Are you sure you want to delete it from your favorite list?",
@@ -94,9 +90,9 @@ export default class FavGameList extends Component
               ],
               { cancelable: true}
             )
-          }  >
-          <Text>Delete favorite</Text>
-        </TouchableHighlight>
+          }  
+          title="Delete favorite 💔"          
+        />
         </View>
       </View>
       );
