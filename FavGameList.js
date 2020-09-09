@@ -35,11 +35,8 @@ export default class FavGameList extends Component
     }
 
     _onRefresh() {
-    //  this.render();
       this.setState({refreshing: true});
-    //  fetchData().then(() => {
-        this.setState({refreshing: false});
-    //  });
+      this.setState({refreshing: false});
     }
 
     render(){

@@ -190,7 +190,7 @@ export default class GameDetails extends Component
 renderRating(game)
   {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View>
         <Text style={styles.dataTitle}>
           Rating: 
         </Text>
@@ -353,10 +353,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   image: {
-    width: 190,
-    height: 270,
+    width: 180,
+    height: 260,
   }
 
 });
-
-//export default new Realm({schema: [VideoGameSchema], schemaVersion: 0});
