@@ -327,8 +327,9 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 0,
     justifyContent: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginBottom: 5,
+    alignItems: 'center'
   },
   item: {
     marginVertical: 5,

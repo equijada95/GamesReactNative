@@ -94,15 +94,5 @@ export default class FavGameList extends Component
       </View>
       );
   }
-
-  deleteFavorite({item})
-  {
-    realm.write(() => {
-      realm.delete(
-        realm.objects('Game').filtered('game_id =' + item.game_id)
-      );
-    });
-  }
-
     
 }
